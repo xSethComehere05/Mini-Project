@@ -1,0 +1,11 @@
+﻿item,type,amount_thb,unit
+รับซื้อขวด+รีไซเคิล,variable,38,per_garment
+ปั่นเส้นใย/ทอผ้า,variable,120,per_garment
+เคลือบ UV/กันน้ำ,variable,55,per_garment
+ตัดเย็บ,variable,140,per_garment
+ระบบ AI + QR,variable,18,per_garment
+การตลาด,variable,110,per_garment
+R&D,fixed,150000,per_month
+ค่าเช่าเครื่องจักร/โรงงาน,fixed,220000,per_month
+บุคลากร,fixed,150000,per_month
+เงินลงทุนเริ่มต้น,capex,3500000,one_time

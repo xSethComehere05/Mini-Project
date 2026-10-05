@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PETra | จากขวดหนึ่งใบ สู่เสื้อหนึ่งตัว</title>
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{--ink:#2B3A42;--blue:#2F4B8C;--sky:#9DB0DB;--mist:#EEF0F1;--paper:#fff;--warn:#B4503C;
+font-family:'Prompt','Noto Sans Thai',sans-serif;color:var(--ink)}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);line-height:1.6}
+main{max-width:1000px;margin:0 auto;padding:0 20px}
+.hero{padding:72px 0 40px}
+.hero h1{font-size:clamp(40px,8vw,84px);line-height:1.05;margin:0 0 20px;font-weight:700;letter-spacing:-.02em}
+.hero p{max-width:60ch;font-size:18px;margin:0 0 28px}
+.bottles{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:36px}
+.bottles i{width:14px;height:34px;border-radius:5px 5px 3px 3px;background:var(--sky);display:block}
+.bottles b{font-size:22px;margin-left:10px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:0;border-top:3px solid var(--ink)}
+.kpis div{padding:14px 16px 14px 0}.kpis strong{display:block;font-size:30px;line-height:1.2}
+.kpis span{font-size:14px;opacity:.75}
+.ch{display:grid;grid-template-columns:5fr 7fr;gap:40px;padding:56px 0;border-top:1px solid var(--mist);align-items:start}
+.ch h2{font-size:26px;line-height:1.3;margin:6px 0 12px}
+.ch small{color:var(--blue);font-weight:600}
+.ch p{margin:0 0 10px}.note{font-size:13px;opacity:.7}
+.box{position:relative;height:320px}
+.qr{display:flex;gap:14px;align-items:center;margin-top:18px;padding:14px;background:var(--mist);border-radius:10px;font-size:14px}
+.qr svg{flex:none}
+footer{padding:36px 0 60px;font-size:13px;opacity:.75;border-top:3px solid var(--ink)}
+@media(max-width:760px){.ch{grid-template-columns:1fr;gap:18px;padding:40px 0}.box{height:280px}}
+</style>
+</head>
+<body>
+<main>
+<section class="hero">
+  <h1>PETra<br>ขวด 15 ใบ = เสื้อ 1 ตัว</h1>
+  <p>เราเปลี่ยนขวด PET ใช้แล้วเป็นเส้นใย rPET ทำเสื้อกัน UV/กันฝน และให้ลูกค้าสแกน QR เพื่อดูว่าเสื้อตัวนี้ลดคาร์บอนได้เท่าไร Dashboard นี้เล่าเรื่องจากปัญหา ไปจนถึงวันที่ธุรกิจคืนทุน</p>
+  <div class="bottles" id="bottles"></div>
+  <div class="kpis" id="kpis"></div>
+</section>
+
+<section class="ch"><div><small>บทที่ 1 ปัญหา</small><h2>ขวด PET ส่วนใหญ่ยังไม่กลับมาใช้ใหม่</h2>
+<p>ผ่านไป 5 ปี อัตราการรีไซเคิลขยับขึ้นช้า ขวดที่เหลือกลายเป็นขยะ นี่คือวัตถุดิบที่เรารอรับอยู่</p><p class="note">ค่าจำลองเพื่อประกอบเรื่อง ใช้ข้อมูลจริงจากกรมควบคุมมลพิษแทนได้</p></div>
+<div class="box"><canvas id="c1"></canvas></div></section>
+
+<section class="ch"><div><small>บทที่ 2 โอกาสตลาด</small><h2>เสื้อรีไซเคิลโตเร็วกว่าตลาดเสื้อผ้าทั่วไปราว 10 เท่า</h2>
+<p>เมื่อลูกค้าและองค์กรใส่ใจ ESG และสภาพอากาศแปรปรวน เสื้อ UV/กันฝนที่ทำจากวัสดุรีไซเคิลจึงมีที่ยืนชัดเจน</p><p class="note">ดัชนี 2020 = 100 ค่าจำลอง ควรอ้างอิงรายงานตลาดจริง</p></div>
+<div class="box"><canvas id="c2"></canvas></div></section>
+
+<section class="ch"><div><small>บทที่ 3 ต้นน้ำ</small><h2 id="h3"></h2>
+<p>AI คัดแยกช่วยลดสัดส่วนขวดที่ใช้ไม่ได้ ทุกขวดที่รอดคือต้นทุนที่ต่ำลงและเส้นใยที่สะอาดขึ้น</p></div>
+<div class="box"><canvas id="c3"></canvas></div></section>
+
+<section class="ch"><div><small>บทที่ 4 พิสูจน์ได้</small><h2 id="h4"></h2>
+<p>เสื้อทุกตัวมี QR ให้ดูจำนวนขวดและคาร์บอนที่ลดได้ นี่คือสิ่งที่ตอบโจทย์ลูกค้าที่ไม่เชื่อ Greenwashing</p>
+<div class="qr"><svg width="54" height="54" viewBox="0 0 9 9"><rect width="9" height="9" fill="#fff"/><path fill="#2B3A42" d="M0 0h3v3H0zM6 0h3v3H6zM0 6h3v3H0zM4 1h1v2H4zM4 4h2v1H4zM7 5h2v1H7zM5 6h1v3H5zM7 7h1v2H7z"/></svg>
+<div><b>เสื้อกัน UV (Light Series)</b><br>ทำจากขวด PET 15 ใบ ลด CO₂e ได้ราว 0.9 กก.</div></div>
+<p class="note">ค่าคำนวณจากสมมติฐานใน scripts/generate_data.py ควรเปลี่ยนเป็นค่า TGO</p></div>
+<div class="box"><canvas id="c4"></canvas></div></section>
+
+<section class="ch"><div><small>บทที่ 5 ลูกค้าและช่องทาง</small><h2 id="h5"></h2>
+<p>รายได้มาจากทั้งผู้ซื้อออนไลน์และงานยูนิฟอร์มองค์กร ซึ่งสั่งทีละมากและเป็นรายได้ที่คาดการณ์ได้</p></div>
+<div class="box" style="height:360px"><canvas id="c5"></canvas></div></section>
+
+<section class="ch"><div><small>บทที่ 6 ผลทางการเงิน</small><h2 id="h6"></h2>
+<p id="p6"></p></div>
+<div><div class="box"><canvas id="c6"></canvas></div><div class="box" style="margin-top:28px"><canvas id="c7"></canvas></div></div></section>
+
+<footer>ข้อมูลภายในบริษัท (ขวด การผลิต ยอดขาย ต้นทุน) เป็นข้อมูลจำลองสร้างด้วย scripts/generate_data.py ข้อมูลตลาดบทที่ 1-2 เป็นค่าจำลองเพื่อประกอบเรื่อง รายวิชา Business Idea Creation</footer>
+</main>
+<script src="data.js"></script>
+<script>
+const D=window.D,K=D.kpi,f=n=>Math.round(n).toLocaleString('th-TH'),ink='#2B3A42',blue='#2F4B8C',sky='#9DB0DB',warn='#B4503C';
+Chart.defaults.font.family="'Prompt',sans-serif";Chart.defaults.color=ink;Chart.defaults.maintainAspectRatio=false;
+Chart.defaults.plugins.legend.position='bottom';
+const mo=D.months.map(m=>m.slice(2));
+document.getElementById('bottles').innerHTML='<i></i>'.repeat(15)+'<b>= เสื้อ 1 ตัว</b>';
+document.getElementById('kpis').innerHTML=[
+ [f(K.bottles),'ขวดที่รีไซเคิลได้ใน 12 เดือน'],[f(K.units),'ตัวที่ขายแล้ว'],
+ [(K.co2/1000).toFixed(1)+' ตัน','CO₂e ที่ลดได้'],['เดือนที่ '+D.payback,'ประเมินว่าคืนทุน']].map(x=>`<div><strong>${x[0]}</strong><span>${x[1]}</span></div>`).join('');
+h3.textContent=`AI ช่วยลดขวดที่ใช้ไม่ได้จาก ${K.contam0}% เหลือ ${K.contam1}%`;
+h4.textContent=`ขวด ${f(K.bottles)} ใบ ลดคาร์บอนได้ ${(K.co2/1000).toFixed(1)} ตัน`;
+const d2c=D.seg.D2C,b2b=D.seg.B2B;
+h5.textContent=`ออนไลน์ให้รายได้ ${Math.round(d2c/(d2c+b2b)*100)}% และ B2B อีก ${Math.round(b2b/(d2c+b2b)*100)}%`;
+h6.textContent=`กำไรต่อตัว ${f(D.price-D.var_unit)} บาท คืนทุนเดือนที่ ${D.payback}`;
+p6.textContent=`ราคาขายเฉลี่ย ${f(D.price)} บาท หักต้นทุนผันแปร ${f(D.var_unit)} บาท ได้กำไรก่อนค่าใช้จ่ายคงที่ ${f(D.price-D.var_unit)} บาทต่อตัว เมื่อรวมค่าใช้จ่ายคงที่ ${f(D.fixed)} บาทต่อเดือนและเงินลงทุน ${f(D.invest)} บาท`;
+const M=D.market;
+new Chart(c1,{type:'bar',data:{labels:M.years,datasets:[{label:'รีไซเคิลแล้ว (%)',data:M.recycle,backgroundColor:blue},{label:'ยังไม่ถูกรีไซเคิล (%)',data:M.recycle.map(v=>100-v),backgroundColor:sky}]},options:{scales:{x:{stacked:true},y:{stacked:true,max:100}}}});
+new Chart(c2,{type:'line',data:{labels:M.years,datasets:[{label:'เสื้อรีไซเคิล',data:M.recycled_apparel,borderColor:blue,borderWidth:3,tension:.3},{label:'เสื้อ Outdoor/UV',data:M.outdoor_uv,borderColor:sky,borderWidth:3,tension:.3},{label:'เสื้อผ้าทั่วไป',data:M.general,borderColor:ink,borderDash:[5,4],tension:.3}]}});
+new Chart(c3,{data:{labels:mo,datasets:[{type:'bar',label:'ขวดที่ใช้ได้',data:D.usable,backgroundColor:blue,stack:'a',yAxisID:'y'},{type:'bar',label:'ขวดที่คัดทิ้ง',data:D.rejected,backgroundColor:sky,stack:'a',yAxisID:'y'},{type:'line',label:'สัดส่วนคัดทิ้ง (%)',data:D.contam,borderColor:warn,borderWidth:3,yAxisID:'y2',tension:.3}]},options:{scales:{y:{stacked:true,title:{display:true,text:'ขวด'}},y2:{position:'right',grid:{drawOnChartArea:false},title:{display:true,text:'%'},min:0}}}});
+new Chart(c4,{type:'line',data:{labels:mo,datasets:[{label:'CO₂e ที่ลดได้สะสม (กก.)',data:D.co2_cum,borderColor:blue,backgroundColor:'rgba(47,75,140,.15)',fill:true,borderWidth:3,tension:.3}]}});
+const chn=Object.entries(D.ch).sort((a,b)=>b[1]-a[1]);
+new Chart(c5,{type:'bar',data:{labels:chn.map(x=>x[0]),datasets:[{label:'รายได้ 12 เดือน (บาท)',data:chn.map(x=>x[1]),backgroundColor:chn.map(x=>x[0]=='B2B'?ink:blue)}]},options:{indexAxis:'y',plugins:{legend:{display:false}}}});
+let run=D.price;const wl=['ราคาขายเฉลี่ย'],wd=[[0,D.price]],wc=[blue];
+Object.entries(D.var).forEach(([k,v])=>{wl.push(k);wd.push([run-v,run]);run-=v;wc.push(sky)});
+wl.push('กำไรต่อตัว');wd.push([0,run]);wc.push(ink);
+new Chart(c6,{type:'bar',data:{labels:wl,datasets:[{data:wd,backgroundColor:wc}]},options:{plugins:{legend:{display:false},title:{display:true,text:'ราคาขายเฉลี่ยสู่กำไรต่อตัว (บาท)'}}}});
+const pb=D.payback-1;
+new Chart(c7,{type:'line',data:{labels:D.cash.map((_,i)=>i+1),datasets:[{label:'เงินสดสะสม (บาท)',data:D.cash,borderColor:blue,borderWidth:3,pointRadius:D.cash.map((_,i)=>i==pb?7:0),pointBackgroundColor:warn,segment:{borderDash:c=>c.p0DataIndex>=11?[6,4]:undefined}}]},options:{plugins:{title:{display:true,text:'เงินสดสะสมรายเดือน (เส้นประคือคาดการณ์ หลังเดือนที่ 12)'},legend:{display:false}},scales:{x:{title:{display:true,text:'เดือนที่'}}}}});
+</script>
+</body>
+</html>
